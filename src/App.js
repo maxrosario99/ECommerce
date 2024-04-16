@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import Products from "./components/Products/Products";
 import Navbar from "./components/Navbar/Navbar";
 // import { Products, Navbar } from "./components"
 const App = () => {
+  // const [cart, setCart] = useState({});
+
+  // const fetchCart = async () => {
+  //   await commerce.cart.retrieved();
+  //   setCart(await commerce.cart.retrieve());
+  // };
+
+  // const handleAddToCart = async (productId, quantity) => {
+  //   const response = await commerce.cart.add(productId, quantity);
+
+  //   setCart(item.cart);
+  // };
   return (
     <div>
       <Navbar />
-      <Products />
+      <Products
+      // products={products}
+      // onAddToCart={handleAddToCart}
+      />
     </div>
   );
 };

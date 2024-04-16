@@ -1,34 +1,42 @@
-import React from 'react'
-import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from "@material-ui/core"
-import { ShoppingCart} from "@material-ui/icons"
-// import logo from "../../assets/commerce.png"
+import React from "react";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  MenuItem,
+  Menu,
+  Typography,
+} from "@material-ui/core";
+import { ShoppingCart } from "@material-ui/icons";
+// import logo from "../../assets/commerce.png";
 import useStyles from "./styles";
 const Navbar = () => {
-    const classes = useStyles();
+  const classes = useStyles();
   return (
     <>
-    <AppBar position="fixed" className={classes.AppBar} color="inherit">
+      <AppBar position="fixed" className={classes.AppBar} color="inherit">
         <Toolbar>
-            <Typography variant="h6" className={classes.title} color="inherit">
-                <img src={logo} alt="Commerce.js" height="25px" className={classes.image} />
-            </Typography>
-        </Toolbar>
-        <div className='{classes.grow}' />
-        <div className = "{classes.button}"/>
+          <Typography variant="h6" className={classes.title} color="inherit">
+            <img
+              src={"#"}
+              alt="Commerce.js"
+              height="25px"
+              className={classes.image}
+            />
+          </Typography>
+          <div className="{classes.grow}" />
+          <div className="{classes.button}">
             <IconButton>
-                <Badge badgeContent={2} color="secondary">
-                    <ShoppingCart />
-                </Badge>
-                
+              <Badge badgeContent={2} color="secondary">
+                <ShoppingCart />
+              </Badge>
             </IconButton>
-    </AppBar>
-    
-    
-    
+          </div>
+        </Toolbar>
+      </AppBar>
     </>
+  );
+};
 
-
-    )
-}
-
-export default Navbar
+export default Navbar;

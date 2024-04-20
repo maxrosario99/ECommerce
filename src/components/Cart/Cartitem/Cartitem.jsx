@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Button, Card, CardActions, CardContent, CarMedia } from "@material-ui/core"
 import useStyles from "./styles"
 
-const Cartitem = ({item}) => {
+const Cartitem = ({item, onUpdateCartQty, onRemoveFromCart}) => {
   const classes = useStyles();
     return (
         <Card>

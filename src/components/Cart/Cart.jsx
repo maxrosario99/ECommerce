@@ -3,21 +3,23 @@ import {Container, Typography, Button, Grid} from "@material-ui/core"
 
 import useStyles from "./styles"
 import Cartitem from './Cartitem/Cartitem'
-const Cart = ({cart}) => {
+import {Link} from "react-router-dom"
+const Cart = ({cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart}) => {
 
 
     const classes = useStyles();;
-    const isEmpty = !cart.line_items.length
-    const EmptyCart = () => (
+    const handleEmptyCart = () => onEmptyCart
+
+    const renderEmptyCart = () => (
         <Typography variant="subtitle1" >You have no items in your cart</Typography>
     )
-    const filledCart = () => (
+    if (!cart.line_items) return "Loading";
+    const renderCart = () => (
         <>
             <Grid container spacing={3} >
-                {cart.line_items.map((item) => 
-                <Grid item xs={12} sm={4} key={item.id}>
-                    <Cartitem item={item}/>
-                </Grid>
+                {cart.line_items.map((lineItem) => 
+                <Grid item xs={12} sm={4} key={lineItem.id}>
+                    <Cartitem item={lineItem} onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart} />                </Grid>
                 
                 )}
 
@@ -40,6 +42,7 @@ const Cart = ({cart}) => {
     <Container>
         <div className={classes.toolbar}  />
         <Typography className= {classes.title} variant="h3" gutterBottom>Your Shopping Cart</Typography>
+            {!cart.line_items.length ? renderEmptyCart() : renderCart() } 
     </Container>
 
     )

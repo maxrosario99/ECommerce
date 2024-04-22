@@ -12,6 +12,29 @@ const AddressForm = () => {
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState('');
     const methods = useForm()
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }))
+    const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }))
+
+
+    const fetchShippingCountries = async (checkoutTokenId) => {
+      const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
+      console.log(countries)
+      setShippingCountries(countries)
+      setShippingCountry(Object.keys(countries))
+    }
+    const fetchSubdivisions = async (countryCode) => {
+      const response = await commerce.services.localeListSubdivisions(countryCode)
+      setShippingSubdivisions(subdivisions);
+      setShippingSubdivision(Object.keys(subdivisions)[0])
+    }
+    useEffect(() => {
+      fetchShippingCountries(checkoutToken.id)
+    }, [])
+
+    useEffect(() => {
+      if(shippingCountry) fetchSubdivisions(shippingCountry)
+
+    }, [shippingCountry])
   return (
     <>
         <Typography variant="h6" gutterBottom>Shipping Address</Typography>

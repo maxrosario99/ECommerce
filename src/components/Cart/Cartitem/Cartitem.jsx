@@ -5,7 +5,7 @@ import useStyles from "../styles"
 const Cartitem = ({item, onUpdateCartQty, onRemoveFromCart}) => {
   const classes = useStyles();
 
-  
+  console.log(item)
     return (
         <Card>
             <CardMedia image={item.image.url} alt={item.name} className={classes.media} />
@@ -17,12 +17,12 @@ const Cartitem = ({item, onUpdateCartQty, onRemoveFromCart}) => {
             </CardContent>
             <CardActions className={classes.CardActions}>
                 <div className={classes.buttons}>
-                    <Button type="button" size="small" >-</Button>
+                    <Button onClick={() => onUpdateCartQty(item.id, item.quantity - 1)} type="button" size="small" >-</Button>
                     <Typography>{item.quantity}</Typography>
-                    <Button type="button" size="small" >+</Button>
+                    <Button onClick={() => onUpdateCartQty(item.id, item.quantity + 1)} type="button" size="small" >+</Button>
 
                 </div>
-            <Button type="button" color="secondary">Remove</Button>
+            <Button onClick={() => onRemoveFromCart(item.id)} type="button" color="secondary">Remove</Button>
             </CardActions>
         </Card>
     )

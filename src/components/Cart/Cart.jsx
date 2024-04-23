@@ -7,8 +7,10 @@ import {Link} from "react-router-dom"
 const Cart = ({cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart}) => {
 
 
-    const classes = useStyles();;
-    const handleEmptyCart = () => onEmptyCart
+    const classes = useStyles();
+    const handleEmptyCart = () => {
+        onEmptyCart();
+    }
 
     const renderEmptyCart = () => (
         <Typography variant="subtitle1" >You have no items in your cart</Typography>
@@ -19,7 +21,8 @@ const Cart = ({cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart}) => {
             <Grid container spacing={3} >
                 {cart.line_items.map((lineItem) => 
                 <Grid item xs={12} sm={4} key={lineItem.id}>
-                    <Cartitem item={lineItem} onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart} />                </Grid>
+                    <Cartitem item={lineItem} onUpdateCartQty={onUpdateCartQty} onRemoveFromCart={onRemoveFromCart} />
+                </Grid>
                 
                 )}
 

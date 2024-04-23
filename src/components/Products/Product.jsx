@@ -5,7 +5,7 @@ import { AddShoppingCart} from "@material-ui/icons"
 import useStyles from "./styles"
 const Product = ( {product, onAddtoCart}) => {
     const classes = useStyles();
-    console.log(product)
+    // console.log(product)
     const handleAddToCart = () => onAddtoCart(product.id, 1)
   return (
     <Card className={classes.root}>

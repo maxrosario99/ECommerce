@@ -5,9 +5,15 @@ import Navbar from "./components/Navbar/Navbar";
 import Cart from "./components/Cart/Cart";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Checkout from "./components/CheckoutForm/Checkout/Checkout";
+import { CssBaseline } from "@material-ui/core";
+
 // import { Products, Navbar } from "./components"
 const App = () => {
   const [cart, setCart] = useState({});
+  const [order, setOrder] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const fetchCart = async () => {
     setCart(await commerce.cart.retrieve());
@@ -32,6 +38,24 @@ const App = () => {
     const { cart } = await commerce.cart.empty();
     setCart = cart;
   };
+  const refreshCart = async () => {
+    const newCart = await commerce.cart.refresh();
+
+    setCart(newCart);
+  };
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(
+        checkoutTokenId,
+        newOrder
+      );
+
+      setOrder(incomingOrder);
+    } catch (error) {
+      setErrorMessage(error.data.error.message);
+    }
+  };
+
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
@@ -44,15 +68,24 @@ const App = () => {
     fetchCart();
   }, []);
 
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
+
   console.log(cart);
   return (
     <Router>
-      <div>
-        <Navbar totalItems={cart.total_items} />
-
+      <div style={{ display: "flex" }}>
+        <CssBaseline />
+        <Navbar
+          totalItems={cart.total_items}
+          handleDrawerToggle={handleDrawerToggle}
+        />
         <Switch>
           <Route exact path="/">
-            <Products products={products} onAddToCart={handleAddToCart} />
+            <Products
+              products={products}
+              onAddToCart={handleAddToCart}
+              handleUpdateCartQty
+            />
           </Route>
           <Route exact path="/cart">
             <Cart
@@ -62,7 +95,14 @@ const App = () => {
               onEmptyCart={handleEmptyCart}
             />
           </Route>
-          <Route exact path="/checkout"></Route>
+          <Route path="/checkout" exact>
+            <Checkout
+              cart={cart}
+              order={order}
+              onCaptureCheckout={handleCaptureCheckout}
+              error={errorMessage}
+            />
+          </Route>
         </Switch>
       </div>
     </Router>

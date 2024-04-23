@@ -6,6 +6,7 @@ import useStyles from "./styles"
 const Product = ( {product, onAddtoCart}) => {
     const classes = useStyles();
     console.log(product)
+    const handleAddToCart = () => onAddtoCart(product.id, 1)
   return (
     <Card className={classes.root}>
         <CardMedia className={classes.media} image={product.image.url} title={product.name} />
@@ -24,7 +25,7 @@ const Product = ( {product, onAddtoCart}) => {
             <Typography dangerouslySetInnerHTML={{__html: product.description}} variant="body2" color="textSecondary" />
         </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
-            <IconButton aria-label="Add to Cart" onClick={() => onAddtoCart(product.id)}>
+            <IconButton aria-label="Add to Cart" onClick={handleAddToCart}>
                 <AddShoppingCart />
 
             </IconButton>
